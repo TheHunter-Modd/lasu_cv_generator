@@ -34,6 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $errors["email_used"] = "Email already registered!";
        }
 
+            if ($pwd !== $_POST["confirm_pwd"]) {
+                    $errors["password_mismatch"] = "Passwords do not match!";
+       }
+
         require_once 'config_session.inc.php';   
 
        if ($errors) {
@@ -53,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
        }
 
-       create_user($pdo, $firstamNe, $lastName, $matricNumber, $email, $pwd);
+       create_user($pdo, $firstName, $lastName, $matricNumber, $email, $pwd);
 
        header("Location: ../login.php?signup=success");
 

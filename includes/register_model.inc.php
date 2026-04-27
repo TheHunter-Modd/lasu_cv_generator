@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 
 function get_first_name(object $pdo, string $firstName) {
-    $query = "SELECT name FROM users WHERE first_name = :first_name;";
+    $query = "SELECT * FROM users WHERE first_name = :first_name;";
     $stmt = $pdo->prepare($query);
 
     $stmt->bindParam(":first_name", $firstName);
@@ -16,7 +16,7 @@ function get_first_name(object $pdo, string $firstName) {
 }
 
 function get_last_name(object $pdo, string $lastName) {
-    $query = "SELECT name FROM users WHERE last_name = :last_name;";
+    $query = "SELECT * FROM users WHERE last_name = :last_name;";
     $stmt = $pdo->prepare($query);
 
     $stmt->bindParam(":last_name", $lastName);
@@ -27,7 +27,7 @@ function get_last_name(object $pdo, string $lastName) {
 }
 
 function get_matric_number(object $pdo, string $matricNumber) {
-    $query = "SELECT name FROM users WHERE matric_number = :matric_number;";
+    $query = "SELECT * FROM users WHERE matric_number = :matric_number;";
     $stmt = $pdo->prepare($query);
 
     $stmt->bindParam(":matric_number", $matricNumber);
@@ -38,7 +38,7 @@ function get_matric_number(object $pdo, string $matricNumber) {
 }
 
 function get_email(object $pdo, string $email) {
-    $query = "SELECT name FROM users WHERE email = :email;";
+    $query = "SELECT * FROM users WHERE email = :email;";
     $stmt = $pdo->prepare($query);
 
     $stmt->bindParam(":email", $email);
