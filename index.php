@@ -56,7 +56,7 @@ session_start();
                     Already have an account? <a href="login.php">Log in</a>
                 </div>
 
-                <form method="POST" action="register.php">
+                <form action="includes/register.inc.php" method="post">
 
                     <div class="form-group">
                         <input type="text" name="first_name" placeholder="First Name" required>
@@ -64,13 +64,13 @@ session_start();
                     </div>
 
                     <div class="form-group">
-                        <input type="text" name="matric_no" placeholder="Matric Number" required>
+                        <input type="text" name="matric_number" placeholder="Matric Number" required>
                         <input type="email" name="email" placeholder="Email" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="password" name="password" placeholder="Password" required>
-                        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                        <input type="password" name="pwd" placeholder="Password" required>
+                        <input type="password" name="confirm_pwd" placeholder="Confirm Password" required>
                     </div>
 
                     <div class="checkbox">
@@ -84,6 +84,10 @@ session_start();
                     <button class="btn" type="submit">Sign Up</button>
 
                 </form>
+
+                <div class="mt-3 text-center">
+                    <?php Check_register_errors(); ?>
+                </div>
             </div>
 
         </div>
