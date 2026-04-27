@@ -1,0 +1,156 @@
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f2f3f7;
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(to right, #6f77c6, #8b90e0);
+    padding: 18px 40px;
+}
+
+/* THIS IS THE KEY */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* IMAGE */
+.logo img {
+    width: 32px;
+    height: 32px;
+}
+
+/* TEXT BLOCK */
+.text h3 {
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.text small {
+    display: block;
+    color: #e0e3ff;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+ /* MAIN CONTAINER */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.card {
+    display: flex;
+    width: 900px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* LEFT SIDE */
+.left {
+    width: 50%;
+    background: linear-gradient(to bottom, #7c83d3, #6f77c6);
+    color: white;
+    padding: 40px;
+}
+
+.left h1 {
+    margin-top: 80px;
+    font-size: 40px;
+}
+
+.left p {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.image1 {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* RIGHT SIDE */
+.right {
+    width: 50%;
+    background: white;
+    padding: 40px;
+}
+
+.right h2 {
+    margin-bottom: 10px;
+}
+
+.right p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.login-link {
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.login-link a {
+    color: #6f77c6;
+    text-decoration: none;
+}
+
+/* FORM */
+.form-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.checkbox {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.checkbox input {
+    width: auto;
+    margin-right: 5px;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #7c83d3;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #6a70c2;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 20px;
+    color: #555;
+}
