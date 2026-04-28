@@ -226,7 +226,7 @@ if (!isset($_SESSION["user_id"])) {
 <div class="card actions-card">
     <div class="card-header">
         <h4>Next Actions</h4>
-        <span class="icon">📅</span>
+        <span class="icon"><img src="assets/calendar.svg" alt="Calendar"></span>
     </div>
 
     <div class="action-item">
@@ -252,7 +252,7 @@ if (!isset($_SESSION["user_id"])) {
 <div class="card tips-card">
     <div class="card-header">
         <h4>Pro Tips</h4>
-        <span class="icon">⚙️</span>
+        <span class="icon"><img src="assets/settings-2.svg" alt="settings-2"></span>
     </div>
 
     <div class="tip-item">
