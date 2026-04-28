@@ -27,7 +27,9 @@ if (!isset($_SESSION["user_id"])) {
 
     <!-- SIDEBAR -->
     <div class="sidebar">
-        <h2 class="logo">lasu<span>cv.</span></h2>
+        <h2 class="logo">
+            <img src="assets/favicon_io/favicon-32x32.png" alt="logo">
+            lasu<span>cv.</span></h2>
 
         <ul>
             <li class="active">Dashboard</li>
@@ -35,7 +37,7 @@ if (!isset($_SESSION["user_id"])) {
             <li>Preview CV</li>
         </ul>
 
-        <a href="logout.php" class="logout">Logout</a>
+        <a href="includes\logout.inc.php" class="logout">Logout</a>
     </div>
 
     <!-- MAIN -->
