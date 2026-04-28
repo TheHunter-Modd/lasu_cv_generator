@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/config_session.inc.php';
-require_once 'includes/signin_view.inc.php';
+require_once 'includes/login_view.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -12,8 +12,17 @@ require_once 'includes/signin_view.inc.php';
 </head>
 <body>
     <div>
-        <form action="">
+        <form action="includes/login.inc.php" method="post">
 
+    <input type="text" name="matric_number" placeholder="Matric Number" required>
+
+    <input type="password" name="pwd" placeholder="Password" required>
+
+    <button type="submit">Login</button>
+
+</form>
+
+<?php Check_login_errors(); ?>
     </form>
     </div>
 </body>
