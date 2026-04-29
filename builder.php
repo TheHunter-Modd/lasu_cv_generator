@@ -107,119 +107,119 @@ if (!isset($_SESSION["user_id"])) {
             <div class="builder-card">
 
     <!-- PERSONAL -->
-    <div class="form-section active" id="personal">
+    <form class="form-section active" id="personal" method="POST">
         <h2>Personal Information</h2>
 
         <div class="form-grid">
             <div class="form-group">
                 <label>Full Name *</label>
-                <input type="text" placeholder="e.g. John Doe">
+                <input type="text" name="full_name" placeholder="e.g. John Doe">
             </div>
 
             <div class="form-group">
                 <label>Email *</label>
-                <input type="email" placeholder="john@example.com">
+                <input type="email" name="email" placeholder="john@example.com">
             </div>
 
             <div class="form-group">
                 <label>Phone *</label>
-                <input type="text" placeholder="+234...">
+                <input type="text" name="phone" placeholder="+234...">
             </div>
 
             <div class="form-group">
                 <label>LinkedIn / Portfolio URL (Optional)</label>
-                <input type="text" placeholder="linkedin.com/in/...">
+                <input type="text" name="linkedin_url" placeholder="linkedin.com/in/...">
             </div>
 
             <div class="form-group full">
                 <label>Address *</label>
-                <input type="text" placeholder="City, Country">
+                <input type="text" name="address" placeholder="City, Country">
             </div>
         </div>
-    </div>
+    </form>
 
     <!-- SUMMARY -->
-    <div class="form-section" id="summary">
+    <form class="form-section" id="summary" method="POST">
         <h2>Professional Summary</h2>
         <p>Write 2-4 sentences highlighting your key skills, experiences, and career goals.</p>
-        <textarea placeholder="A highly motivated computer science student with a passion for building scalable web applications. Proficient in Html, CSS, and PHP..."></textarea>
-    </div>
+        <textarea name="professional_summary" placeholder="A highly motivated computer science student with a passion for building scalable web applications. Proficient in Html, CSS, and PHP..."></textarea>
+    </form>
 
     <!-- EDUCATION -->
-    <div class="form-section" id="education">
+    <form class="form-section" id="education" method="POST">
         <h2>Education</h2>
         <p>Add your academic background starting from the most recent.</p>
 
         <div class="form-grid">
             <div class="form-group full">
                 <label>Institution *</label>
-                <input type="text" placeholder="e.g. Lagos State University (LASU)">
+                <input type="text" name="institution" placeholder="e.g. Lagos State University (LASU)">
             </div>
 
             <div class="form-group">
                 <label>Degree</label>
-                <input type="text" placeholder="e.g. Bachelor of Science">
+                <input type="text" name="degree" placeholder="e.g. Bachelor of Science">
             </div>
 
             <div class="form-group">
                 <label>Field of Study</label>
-                <input type="text" placeholder="e.g. Computer Science">
+                <input type="text" name="field_of_study" placeholder="e.g. Computer Science">
             </div>
 
             <div class="form-group">
                 <label>Start Date</label>
-                <input type="text" placeholder="e.g. 2020">
+                <input type="text" name="start_date" placeholder="e.g. 2020">
             </div>
 
             <div class="form-group">
                 <label>End Date (or Expected)</label>
-                <input type="text" placeholder="e.g. 2024">
+                <input type="text" name="end_date" placeholder="e.g. 2024">
             </div>
 
             <div class="form-group full">
                 <label>Grade / CGPA (Optional)</label>
-                <input type="text" placeholder="e.g. 3.8/4.0">
+                <input type="text" name="grade_cgpa" placeholder="e.g. 3.8/4.0">
             </div>
         </div>
-    </div>
+    </form>
 
     <!-- EXPERIENCE -->
-    <div class="form-section" id="experience">
+    <form class="form-section" id="experience" method="POST">
         <h2>Work Experience</h2>
         <p>Include internships, volunteer work, or part-time jobs. Focus on achievements rather than duties.</p>
 
         <div class="form-grid">
             <div class="form-group">
                 <label>Company / Organization</label>
-                <input type="text" placeholder="e.g. Google (or LASU IT Dept)">
+                <input type="text" name="company" placeholder="e.g. Google (or LASU IT Dept)">
             </div>
 
             <div class="form-group">
                 <label>Job Title</label>
-                <input type="text" placeholder="e.g. Software Engineering Intern">
+                <input type="text" name="job_title" placeholder="e.g. Software Engineering Intern">
             </div>
 
             <div class="form-group">
                 <label>Start Date</label>
-                <input type="text" placeholder="e.g. Jun 2022">
+                <input type="text" name="start_date" placeholder="e.g. Jun 2022">
             </div>
 
             <div class="form-group">
                 <label>End Date</label>
-                <input type="text"  placeholder="e.g. Present">
+                <input type="text" name="end_date" placeholder="e.g. Present">
             </div>
 
             <div class="form-group full">
                 <label>Description</label>
-                <textarea name="exp-description" id=""  placeholder="• Developed a new feature that increased user retention by 20%
+                <textarea name="description" id=""  placeholder="• Developed a new feature that increased user retention by 20%
 • Collaborated with a team of 5 engineers to deploy..."></textarea>
             </div>
 
         </div>
-    </div>
+    </form>
 
     <!-- SKILLS (your existing one) -->
-    <div class="form-section" id="skills">
+    <form class="form-section" id="skills" method="POST">
         <h2>Skills & Competencies</h2>
         <p>Add technical skills, tools, and soft skills.</p>
 
@@ -231,7 +231,7 @@ if (!isset($_SESSION["user_id"])) {
         <div class="skill-box">
             <p>No skills added yet.</p>
         </div>
-    </div>
+    </form>
 
     <!-- FOOTER -->
     <div class="builder-footer">
@@ -285,12 +285,29 @@ steps.forEach((step, index) => {
 });
 
 // NEXT BUTTON
-nextBtn.addEventListener("click", () => {
-    if (currentStep < stepOrder.length - 1) {
-        showStep(currentStep + 1);
-    } else {
-        // LAST STEP → GO TO PREVIEW
-        window.location.href = "preview.php";
+nextBtn.addEventListener("click", async () => {
+
+    const currentSection = document.getElementById(stepOrder[currentStep]);
+    const formData = new FormData(currentSection);
+
+    // ADD STEP NAME (VERY IMPORTANT)
+    formData.append("step", stepOrder[currentStep]);
+
+    try {
+        await fetch("includes/save_builder.inc.php", {
+            method: "POST",
+            body: formData
+        });
+
+        // move to next step
+        if (currentStep < stepOrder.length - 1) {
+            showStep(currentStep + 1);
+        } else {
+            window.location.href = "preview.php";
+        }
+
+    } catch (error) {
+        alert("Error saving data");
     }
 });
 
