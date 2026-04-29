@@ -232,12 +232,12 @@ if (!isset($_SESSION["user_id"])) {
             <p>No skills added yet.</p>
         </div>
 
+    </form>
         <!-- FOOTER -->
     <div class="builder-footer">
         <button class="back-btn">Back</button>
         <button type="submit" class="finish-btn">Save & Continue</button>
     </div>
-    </form>
 </div>
 </div>
 </div>
@@ -249,30 +249,59 @@ const sections = document.querySelectorAll(".form-section");
 const nextBtn = document.querySelector(".finish-btn");
 const backBtn = document.querySelector(".back-btn");
 
-steps.forEach(step => {
+let currentStep = 0;
+
+// ORDER
+const stepOrder = ["personal", "summary", "education", "experience", "skills"];
+
+// SHOW STEP FUNCTION
+function showStep(index) {
+    // remove active
+    steps.forEach(s => s.classList.remove("active"));
+    sections.forEach(sec => sec.classList.remove("active"));
+
+    // activate
+    steps[index].classList.add("active");
+    document.getElementById(stepOrder[index]).classList.add("active");
+
+    currentStep = index;
+
+    // CHANGE BUTTON TEXT
+    if (currentStep === stepOrder.length - 1) {
+        nextBtn.textContent = "Save & Finish";
+    } else {
+        nextBtn.textContent = "Save & Continue";
+    }
+}
+
+// CLICK TOP NAV
+steps.forEach((step, index) => {
     step.addEventListener("click", () => {
-
-        // remove active from all
-        steps.forEach(s => s.classList.remove("active"));
-        sections.forEach(sec => sec.classList.remove("active"));
-
-        // activate clicked
-        step.classList.add("active");
-
-        const target = step.dataset.step;
-        document.getElementById(target).classList.add("active");
+        showStep(index);
     });
 });
 
 // NEXT BUTTON
-nextBtn.addEventListener("click", async () => {
+nextBtn.addEventListener("click", (e) => {
+    e.preventDefault();
 
-    const currentSection = document.getElementById(stepOrder[currentStep]);
-    const formData = new FormData(currentSection);
+    const currentForm = document.getElementById(stepOrder[currentStep]);
+
+    // 🔥 SUBMIT CURRENT FORM
+    currentForm.submit();
+
+    // MOVE TO NEXT STEP
+    if (currentStep < stepOrder.length - 1) {
+        showStep(currentStep + 1);
+    } else {
+        window.location.href = "preview.php";
+    }
 });
 
 // BACK BUTTON
-backBtn.addEventListener("click", () => {
+backBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
     if (currentStep > 0) {
         showStep(currentStep - 1);
     }

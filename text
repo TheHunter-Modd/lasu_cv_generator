@@ -93,3 +93,41 @@ steps.forEach((step, index) => {
         showStep(index);
     });
 });
+
+
+
+<script>
+const steps = document.querySelectorAll(".step");
+const sections = document.querySelectorAll(".form-section");
+const nextBtn = document.querySelector(".finish-btn");
+const backBtn = document.querySelector(".back-btn");
+
+steps.forEach(step => {
+    step.addEventListener("click", () => {
+
+        // remove active from all
+        steps.forEach(s => s.classList.remove("active"));
+        sections.forEach(sec => sec.classList.remove("active"));
+
+        // activate clicked
+        step.classList.add("active");
+
+        const target = step.dataset.step;
+        document.getElementById(target).classList.add("active");
+    });
+});
+
+// NEXT BUTTON
+nextBtn.addEventListener("click", async () => {
+
+    const currentSection = document.getElementById(stepOrder[currentStep]);
+    const formData = new FormData(currentSection);
+});
+
+// BACK BUTTON
+backBtn.addEventListener("click", () => {
+    if (currentStep > 0) {
+        showStep(currentStep - 1);
+    }
+});
+</script>
