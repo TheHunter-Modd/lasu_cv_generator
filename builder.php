@@ -96,18 +96,18 @@ if (!isset($_SESSION["user_id"])) {
 
             <!-- STEP NAV -->
             <div class="builder-steps">
-    <span class="step active" data-step="personal">Personal</span>
-    <span class="step" data-step="summary">Summary</span>
-    <span class="step" data-step="education">Education</span>
-    <span class="step" data-step="experience">Experience</span>
-    <span class="step" data-step="skills">Skills</span>
-</div>
+                <span class="step active" data-step="personal">Personal</span>
+                <span class="step" data-step="summary">Summary</span>
+                <span class="step" data-step="education">Education</span>
+                <span class="step" data-step="experience">Experience</span>
+                <span class="step" data-step="skills">Skills</span>
+            </div>
 
             <!-- CARD -->
             <div class="builder-card">
 
     <!-- PERSONAL -->
-    <form class="form-section active" id="personal" method="POST">
+    <form class="form-section active" id="personal" action="includes/builder.inc.php" method="post">
         <h2>Personal Information</h2>
 
         <div class="form-grid">
@@ -139,14 +139,14 @@ if (!isset($_SESSION["user_id"])) {
     </form>
 
     <!-- SUMMARY -->
-    <form class="form-section" id="summary" method="POST">
+    <form class="form-section" id="summary" action="includes/builder.inc.php" method="post">
         <h2>Professional Summary</h2>
         <p>Write 2-4 sentences highlighting your key skills, experiences, and career goals.</p>
         <textarea name="professional_summary" placeholder="A highly motivated computer science student with a passion for building scalable web applications. Proficient in Html, CSS, and PHP..."></textarea>
     </form>
 
     <!-- EDUCATION -->
-    <form class="form-section" id="education" method="POST">
+    <form class="form-section" id="education" action="includes/builder.inc.php" method="post">
         <h2>Education</h2>
         <p>Add your academic background starting from the most recent.</p>
 
@@ -184,7 +184,7 @@ if (!isset($_SESSION["user_id"])) {
     </form>
 
     <!-- EXPERIENCE -->
-    <form class="form-section" id="experience" method="POST">
+    <form class="form-section" id="experience" action="includes/builder.inc.php" method="post">
         <h2>Work Experience</h2>
         <p>Include internships, volunteer work, or part-time jobs. Focus on achievements rather than duties.</p>
 
@@ -219,7 +219,7 @@ if (!isset($_SESSION["user_id"])) {
     </form>
 
     <!-- SKILLS (your existing one) -->
-    <form class="form-section" id="skills" method="POST">
+    <form class="form-section" id="skills" action="includes/builder.inc.php" method="post">
         <h2>Skills & Competencies</h2>
         <p>Add technical skills, tools, and soft skills.</p>
 
@@ -231,19 +231,16 @@ if (!isset($_SESSION["user_id"])) {
         <div class="skill-box">
             <p>No skills added yet.</p>
         </div>
-    </form>
 
-    <!-- FOOTER -->
+        <!-- FOOTER -->
     <div class="builder-footer">
         <button class="back-btn">Back</button>
-        <button class="finish-btn">Save & Continue</button>
+        <button type="submit" class="finish-btn">Save & Continue</button>
     </div>
-
+    </form>
 </div>
-
-        </div>
-
-    </div>
+</div>
+</div>
 </div>
 
 <script>
@@ -252,35 +249,18 @@ const sections = document.querySelectorAll(".form-section");
 const nextBtn = document.querySelector(".finish-btn");
 const backBtn = document.querySelector(".back-btn");
 
-let currentStep = 0;
-
-// STEP ORDER
-const stepOrder = ["personal", "summary", "education", "experience", "skills"];
-
-// FUNCTION TO SHOW STEP
-function showStep(index) {
-    // remove active
-    steps.forEach(s => s.classList.remove("active"));
-    sections.forEach(sec => sec.classList.remove("active"));
-
-    // activate current
-    steps[index].classList.add("active");
-    document.getElementById(stepOrder[index]).classList.add("active");
-
-    currentStep = index;
-
-    // CHANGE BUTTON TEXT ON LAST STEP
-    if (currentStep === stepOrder.length - 1) {
-        nextBtn.textContent = "Finish & Preview CV";
-    } else {
-        nextBtn.textContent = "Save & Continue";
-    }
-}
-
-// CLICK ON TOP TABS
-steps.forEach((step, index) => {
+steps.forEach(step => {
     step.addEventListener("click", () => {
-        showStep(index);
+
+        // remove active from all
+        steps.forEach(s => s.classList.remove("active"));
+        sections.forEach(sec => sec.classList.remove("active"));
+
+        // activate clicked
+        step.classList.add("active");
+
+        const target = step.dataset.step;
+        document.getElementById(target).classList.add("active");
     });
 });
 
@@ -289,26 +269,6 @@ nextBtn.addEventListener("click", async () => {
 
     const currentSection = document.getElementById(stepOrder[currentStep]);
     const formData = new FormData(currentSection);
-
-    // ADD STEP NAME (VERY IMPORTANT)
-    formData.append("step", stepOrder[currentStep]);
-
-    try {
-        await fetch("includes/save_builder.inc.php", {
-            method: "POST",
-            body: formData
-        });
-
-        // move to next step
-        if (currentStep < stepOrder.length - 1) {
-            showStep(currentStep + 1);
-        } else {
-            window.location.href = "preview.php";
-        }
-
-    } catch (error) {
-        alert("Error saving data");
-    }
 });
 
 // BACK BUTTON

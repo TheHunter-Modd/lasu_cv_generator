@@ -54,3 +54,42 @@ CREATE TABLE skills (
     skill_name VARCHAR(100) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+
+<script>
+const steps = document.querySelectorAll(".step");
+const sections = document.querySelectorAll(".form-section");
+const nextBtn = document.querySelector(".finish-btn");
+const backBtn = document.querySelector(".back-btn");
+
+let currentStep = 0;
+
+// STEP ORDER
+const stepOrder = ["personal", "summary", "education", "experience", "skills"];
+
+// FUNCTION TO SHOW STEP
+function showStep(index) {
+    // remove active
+    steps.forEach(s => s.classList.remove("active"));
+    sections.forEach(sec => sec.classList.remove("active"));
+
+    // activate current
+    steps[index].classList.add("active");
+    document.getElementById(stepOrder[index]).classList.add("active");
+
+    currentStep = index;
+
+    // CHANGE BUTTON TEXT ON LAST STEP
+    if (currentStep === stepOrder.length - 1) {
+        nextBtn.textContent = "Finish & Preview CV";
+    } else {
+        nextBtn.textContent = "Save & Continue";
+    }
+}
+
+// CLICK ON TOP TABS
+steps.forEach((step, index) => {
+    step.addEventListener("click", () => {
+        showStep(index);
+    });
+});
