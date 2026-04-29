@@ -32,13 +32,17 @@ if (!isset($_SESSION["user_id"])) {
             </li>
             
             <li>
+                <a href="builder.php">
                 <img src="assets/file-pen.svg" alt="">
                 <span>Builder</span>
+                </a>
             </li>
             
             <li>
+                <a href="builder.php">
                 <img src="assets/eye.svg" alt="">
                 <span>Preview CV</span>
+                </a>
             </li>
         </ul>
 
