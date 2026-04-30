@@ -131,3 +131,15 @@ backBtn.addEventListener("click", () => {
     }
 });
 </script>
+
+
+nextBtn.addEventListener("click", (e) => {
+
+    if (currentStep < stepOrder.length - 1) {
+        e.preventDefault();
+        showStep(currentStep + 1);
+    } else {
+        // LAST STEP → allow submit, then redirect after PHP
+    }
+
+});

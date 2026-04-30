@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/config_session.inc.php';
+require_once 'includes/builder_view.inc.php';
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
@@ -105,9 +106,10 @@ if (!isset($_SESSION["user_id"])) {
 
             <!-- CARD -->
             <div class="builder-card">
-
-    <!-- PERSONAL -->
-    <form class="form-section active" id="personal" action="includes/builder.inc.php" method="post">
+                <form action="includes/builder.inc.php" method="post">
+                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                     <!-- PERSONAL -->
+    <div class="form-section active" id="personal" >
         <h2>Personal Information</h2>
 
         <div class="form-grid">
@@ -136,17 +138,17 @@ if (!isset($_SESSION["user_id"])) {
                 <input type="text" name="address" placeholder="City, Country">
             </div>
         </div>
-    </form>
+    </div>
 
-    <!-- SUMMARY -->
-    <form class="form-section" id="summary" action="includes/builder.inc.php" method="post">
+         <!-- SUMMARY -->
+    <div class="form-section" id="summary">
         <h2>Professional Summary</h2>
         <p>Write 2-4 sentences highlighting your key skills, experiences, and career goals.</p>
         <textarea name="professional_summary" placeholder="A highly motivated computer science student with a passion for building scalable web applications. Proficient in Html, CSS, and PHP..."></textarea>
-    </form>
+    </div>
 
     <!-- EDUCATION -->
-    <form class="form-section" id="education" action="includes/builder.inc.php" method="post">
+    <div class="form-section" id="education">
         <h2>Education</h2>
         <p>Add your academic background starting from the most recent.</p>
 
@@ -168,12 +170,12 @@ if (!isset($_SESSION["user_id"])) {
 
             <div class="form-group">
                 <label>Start Date</label>
-                <input type="text" name="start_date" placeholder="e.g. 2020">
+                <input type="text" name="edu_start_date" placeholder="e.g. 2020">
             </div>
 
             <div class="form-group">
                 <label>End Date (or Expected)</label>
-                <input type="text" name="end_date" placeholder="e.g. 2024">
+                <input type="text" name="edu_end_date" placeholder="e.g. 2024">
             </div>
 
             <div class="form-group full">
@@ -181,10 +183,10 @@ if (!isset($_SESSION["user_id"])) {
                 <input type="text" name="grade_cgpa" placeholder="e.g. 3.8/4.0">
             </div>
         </div>
-    </form>
+    </div>
 
-    <!-- EXPERIENCE -->
-    <form class="form-section" id="experience" action="includes/builder.inc.php" method="post">
+     <!-- EXPERIENCE -->
+    <div class="form-section" id="experience">
         <h2>Work Experience</h2>
         <p>Include internships, volunteer work, or part-time jobs. Focus on achievements rather than duties.</p>
 
@@ -201,12 +203,12 @@ if (!isset($_SESSION["user_id"])) {
 
             <div class="form-group">
                 <label>Start Date</label>
-                <input type="text" name="start_date" placeholder="e.g. Jun 2022">
+                <input type="text" name="exp_start_date" placeholder="e.g. Jun 2022">
             </div>
 
             <div class="form-group">
                 <label>End Date</label>
-                <input type="text" name="end_date" placeholder="e.g. Present">
+                <input type="text" name="exp_end_date" placeholder="e.g. Present">
             </div>
 
             <div class="form-group full">
@@ -216,28 +218,37 @@ if (!isset($_SESSION["user_id"])) {
             </div>
 
         </div>
-    </form>
+    </div>
 
     <!-- SKILLS (your existing one) -->
-    <form class="form-section" id="skills" action="includes/builder.inc.php" method="post">
+    <div class="form-section" id="skills">
         <h2>Skills & Competencies</h2>
         <p>Add technical skills, tools, and soft skills.</p>
 
         <div class="skill-input">
-            <input type="text" placeholder="e.g. JavaScript">
-            <button>+ Add</button>
+            <input type="text" id="skillInput" placeholder="e.g. JavaScript">
+            <button type="button">+ Add</button>
         </div>
 
         <div class="skill-box">
             <p>No skills added yet.</p>
         </div>
 
-    </form>
-        <!-- FOOTER -->
+    </div>
+
+       <!-- FOOTER -->
     <div class="builder-footer">
-        <button class="back-btn">Back</button>
+        <button type="button" class="back-btn">Back</button>
         <button type="submit" class="finish-btn">Save & Continue</button>
     </div>
+    
+
+                </form>
+
+    
+
+   
+     
 </div>
 </div>
 </div>
@@ -256,17 +267,15 @@ const stepOrder = ["personal", "summary", "education", "experience", "skills"];
 
 // SHOW STEP FUNCTION
 function showStep(index) {
-    // remove active
     steps.forEach(s => s.classList.remove("active"));
     sections.forEach(sec => sec.classList.remove("active"));
 
-    // activate
     steps[index].classList.add("active");
     document.getElementById(stepOrder[index]).classList.add("active");
 
     currentStep = index;
 
-    // CHANGE BUTTON TEXT
+    // ONLY change text, not type
     if (currentStep === stepOrder.length - 1) {
         nextBtn.textContent = "Save & Finish";
     } else {
@@ -281,21 +290,36 @@ steps.forEach((step, index) => {
     });
 });
 
+const addSkillBtn = document.querySelector(".skill-input button");
+const skillInput = document.querySelector(".skill-input input");
+const skillBox = document.querySelector(".skill-box");
+
+addSkillBtn.addEventListener("click", () => {
+    if (skillInput.value.trim() === "") return;
+
+    if (skillBox.innerHTML.includes("No skills")) {
+        skillBox.innerHTML = "";
+    }
+
+    const newSkill = document.createElement("div");
+    newSkill.innerHTML = `
+        <input type="hidden" name="skills[]" value="${skillInput.value}">
+        <span>${skillInput.value}</span>
+    `;
+
+    skillBox.appendChild(newSkill);
+    skillInput.value = "";
+});
+
 // NEXT BUTTON
 nextBtn.addEventListener("click", (e) => {
-    e.preventDefault();
 
-    const currentForm = document.getElementById(stepOrder[currentStep]);
-
-    // 🔥 SUBMIT CURRENT FORM
-    currentForm.submit();
-
-    // MOVE TO NEXT STEP
     if (currentStep < stepOrder.length - 1) {
+        e.preventDefault(); // 🚫 block submit
         showStep(currentStep + 1);
-    } else {
-        window.location.href = "preview.php";
     }
+
+    // LAST STEP → do NOTHING → form submits naturally → PHP handles it ✅
 });
 
 // BACK BUTTON
@@ -306,6 +330,8 @@ backBtn.addEventListener("click", (e) => {
         showStep(currentStep - 1);
     }
 });
+
+showStep(0);
 </script>
 
 </body>
