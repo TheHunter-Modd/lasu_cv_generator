@@ -251,15 +251,14 @@ require_once 'includes/preview_contr.inc.php';
                             <?php if (empty($cv_data['skills'])): ?>
                                 <?php preview_render_section_empty('skills'); ?>
                             <?php else: ?>
-                            <div class="cv-skills-list">
-                                <?php foreach ($cv_data['skills'] as $skill): ?>
-                                <span class="cv-skill-tag"><?= $skill ?></span>
-                                <?php endforeach; ?>
-                            </div>
-                            <?php endif; ?>
-                        </div>
-
-                    <?php endif; ?>
+                                <ul class="cv-skills-list">
+                                    <?php foreach ($cv_data['skills'] as $skill): ?>
+                                        <li><?= $skill ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                    <?php endif; ?>
+                                </div>
+                                <?php endif; ?>
 
                 </div><!-- /cv-paper -->
             </div><!-- /cv-wrapper -->

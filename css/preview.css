@@ -191,20 +191,30 @@
 }
 
 /* ── Skills tag cloud ─────────────────────────────────────── */
+/* ── Skills list ──────────────────────────────────────────── */
 .cv-skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 4px 20px;
 }
 
-.cv-skill-tag {
+.cv-skills-list li {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    color: #444;
+    padding-left: 14px;
+    position: relative;
+}
+
+.cv-skills-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
     color: #3d3f8f;
-    background: #ecedf8;
-    border: 1px solid #c8caec;
-    border-radius: 4px;
-    padding: 3px 10px;
+    font-weight: bold;
 }
 
 /* ── Error banner ─────────────────────────────────────────── */
@@ -282,5 +292,25 @@
     @page {
         margin: 0;
         size: A4;
+    }
+
+    /* ... your existing print styles ... */
+
+    /* Force skills to display as separate items in print */
+        /* Force skills to display as separate items in print */
+    .cv-skills-list {
+        display: block !important;
+        margin: 10px 0 0 !important;
+    }
+
+    .cv-skills-list li {
+        display: list-item !important;
+        margin-bottom: 2px !important;
+        padding-left: 14px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .cv-skills-list li::before {
+        content: "•" !important;
     }
 }

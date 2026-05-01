@@ -293,22 +293,35 @@ steps.forEach((step, index) => {
 const addSkillBtn = document.querySelector(".skill-input button");
 const skillInput = document.querySelector(".skill-input input");
 const skillBox = document.querySelector(".skill-box");
+const form = document.querySelector("form");
 
 addSkillBtn.addEventListener("click", () => {
-    if (skillInput.value.trim() === "") return;
+    const skillValue = skillInput.value.trim();
+    if (skillValue === "") return;
 
-    if (skillBox.innerHTML.includes("No skills")) {
+    // Remove "No skills" message
+    if (skillBox.querySelector("p")) {
         skillBox.innerHTML = "";
     }
 
-    const newSkill = document.createElement("div");
-    newSkill.innerHTML = `
-        <input type="hidden" name="skills[]" value="${skillInput.value}">
-        <span>${skillInput.value}</span>
+    // Visual tag
+    const tag = document.createElement("div");
+    tag.className = "skill-tag-item";
+    tag.innerHTML = `
+        <span>${skillValue}</span>
+        <button type="button" class="remove-skill" onclick="this.parentElement.remove()">×</button>
     `;
+    skillBox.appendChild(tag);
 
-    skillBox.appendChild(newSkill);
+    // Hidden input — attached DIRECTLY to form, not inside skillBox
+    const hidden = document.createElement("input");
+    hidden.type = "hidden";
+    hidden.name = "skills[]";
+    hidden.value = skillValue;
+    form.appendChild(hidden);
+
     skillInput.value = "";
+    skillInput.focus();
 });
 
 // NEXT BUTTON
