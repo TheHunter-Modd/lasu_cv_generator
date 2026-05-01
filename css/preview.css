@@ -1,97 +1,286 @@
-.builder-container {
-    padding: 30px;
-}
+/* ============================================================
+   preview.css — LASU CV Generator
+   Loaded after dashboard.css. Adds the preview body,
+   toolbar, A4 paper, CV sections, and print styles.
+============================================================ */
 
-/* BACK LINK */
-.back-link {
-    display: inline-block;
-    margin-bottom: 15px;
-    color: #64748b;
-    text-decoration: none;
-}
-
-/* STEP NAV */
-.builder-steps {
+/* ── Preview scrollable area ──────────────────────────────── */
+.preview-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 32px 48px;
     display: flex;
-    gap: 30px;
-    padding: 15px 20px;
-    background: #fff;
-    border-radius: 14px;
+    flex-direction: column;
+    gap: 20px;
+    background: #f0f2f8;
+}
+
+/* ── Toolbar ──────────────────────────────────────────────── */
+.preview-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: #5a6070;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.18s;
+}
+.back-link:hover { color: #1a1d2e; }
+
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #3d3f8f;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s, transform 0.12s;
+    box-shadow: 0 2px 8px rgba(61, 63, 143, 0.28);
+}
+.btn-download:hover  { background: #2e3080; transform: translateY(-1px); }
+.btn-download:active { transform: translateY(0); }
+
+/* ── CV Paper wrapper ─────────────────────────────────────── */
+.cv-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+/* A4 at 96 dpi: 794px × 1123px */
+.cv-paper {
+    width: 794px;
+    min-height: 1123px;
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+    padding: 56px 60px;
+    box-sizing: border-box;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #1a1d2e;
+    line-height: 1.6;
+}
+
+/* ── CV Header (name + contact) ───────────────────────────── */
+.cv-header {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #1a1d2e;
+    margin-bottom: 22px;
+}
+
+.cv-name {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    color: #1a1d2e;
+}
+
+.cv-contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 20px;
+    font-size: 0.8rem;
+    color: #444;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.cv-contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.cv-contact-item svg { color: #3d3f8f; flex-shrink: 0; }
+
+/* ── Sections ─────────────────────────────────────────────── */
+.cv-section {
+    margin-bottom: 22px;
+}
+
+.cv-section-title {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3d3f8f;
+    margin-bottom: 4px;
+}
+
+.cv-section-rule {
+    border: none;
+    border-top: 1.5px solid #1a1d2e;
+    margin-bottom: 12px;
+}
+
+.cv-section-empty {
+    font-size: 0.82rem;
+    color: #aab0c4;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-style: italic;
+    margin: 0;
+}
+.cv-section-empty a { color: #3d3f8f; }
+
+/* ── Summary ──────────────────────────────────────────────── */
+.cv-summary {
+    font-size: 0.88rem;
+    color: #333;
+    margin: 0;
+}
+
+/* ── Entries (education / experience) ─────────────────────── */
+.cv-entry {
+    margin-bottom: 14px;
+}
+.cv-entry:last-child { margin-bottom: 0; }
+
+.cv-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.cv-entry-title {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1a1d2e;
+    margin-bottom: 1px;
+}
+
+.cv-entry-subtitle {
+    font-size: 0.84rem;
+    color: #555;
+    font-style: italic;
+}
+
+.cv-entry-date {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.78rem;
+    color: #777;
+    white-space: nowrap;
+    padding-top: 2px;
+}
+
+.cv-entry-detail {
+    font-size: 0.82rem;
+    color: #555;
+    margin-top: 3px;
+}
+
+.cv-entry-desc {
+    font-size: 0.86rem;
+    color: #444;
+    margin: 6px 0 0;
+}
+
+/* ── Skills tag cloud ─────────────────────────────────────── */
+.cv-skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cv-skill-tag {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.8rem;
+    color: #3d3f8f;
+    background: #ecedf8;
+    border: 1px solid #c8caec;
+    border-radius: 4px;
+    padding: 3px 10px;
+}
+
+/* ── Error banner ─────────────────────────────────────────── */
+.preview-error-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff4f4;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.88rem;
+    color: #842029;
     margin-bottom: 20px;
 }
 
-.builder-steps span {
-    color: #64748b;
-    cursor: pointer;
-}
-
-.builder-steps .active {
-    color: #6366f1;
-    border-bottom: 2px solid #6366f1;
-    padding-bottom: 5px;
-}
-
-/* CARD */
-.builder-card {
-    background: #fff;
-    padding: 25px;
-    border-radius: 16px;
-}
-
-
-
-/* INPUT */
-.skill-input {
+/* ── Empty state ──────────────────────────────────────────── */
+.cv-empty-state {
     display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.skill-input input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
-
-.skill-input button {
-    padding: 12px 16px;
-    background: #6366f1;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-/* SKILL BOX */
-.skill-box {
-    margin-top: 20px;
-    padding: 40px;
-    border-radius: 12px;
-    background: #f1f5f9;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 60px 0;
+    color: #aab0c4;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.9rem;
     text-align: center;
-    color: #94a3b8;
+    line-height: 1.7;
 }
+.cv-empty-state a { color: #3d3f8f; font-weight: 600; }
 
-/* FOOTER */
-.builder-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 25px;
-}
+/* ============================================================
+   PRINT STYLES — hides shell, renders only the cv-paper
+============================================================ */
+@media print {
+    .sidebar,
+    .header-area,
+    .preview-toolbar,
+    .preview-body > *:not(.cv-wrapper) {
+        display: none !important;
+    }
 
-.back-btn {
-    background: none;
-    border: none;
-    color: #64748b;
-    cursor: pointer;
-}
+    body, .dashboard, .main, .preview-body {
+        display: block !important;
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
 
-.finish-btn {
-    background: #16a34a;
-    color: #fff;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 10px;
-    cursor: pointer;
+    .cv-wrapper { display: block; }
+
+    .cv-paper {
+        width: 100%;
+        min-height: auto;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 20mm 20mm;
+        margin: 0;
+    }
+
+    /* Force all sections visible when printing */
+    .cv-section,
+    .cv-header {
+        display: block !important;
+    }
+
+    .cv-entry,
+    .cv-section {
+        page-break-inside: avoid;
+    }
+
+    @page {
+        margin: 0;
+        size: A4;
+    }
 }

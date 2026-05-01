@@ -21,7 +21,7 @@ require_once 'includes/login_view.inc.php';
     <!-- HEADER -->
     <div class="header">
     <div class="logo">
-        <img src="assets/favicon_io/favicon-32x32.png" alt="logo">
+        <img src="assets/file-text.svg" alt="logo">
 
         <div class="text">
             <h3>LASU CV Generator</h3>
