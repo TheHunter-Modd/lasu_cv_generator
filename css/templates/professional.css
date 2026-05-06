@@ -1,0 +1,70 @@
+/* ── PROFESSIONAL: JULIO RIVERA STRUCTURE ── */
+
+.cv-header {
+    text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #2c3e50;
+    margin-bottom: 15px;
+}
+
+.cv-name {
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #2c3e50;
+    letter-spacing: 0.08em;
+}
+
+.cv-contact-row {
+    justify-content: flex-start;
+    gap: 10px;
+    font-size: 0.78rem;
+    color: #555;
+}
+
+/* SECTION STYLING */
+.cv-section-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #2c3e50;
+    display: inline-block;
+    padding: 4px 12px;
+    margin-bottom: 0px;
+}
+.cv-section-rule { display: none; } /* Hide the default line */
+
+/* THE MAGIC: FLIP TITLE AND COMPANY */
+.cv-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+/* The inner wrapper holds Title and Subtitle */
+.cv-entry-header > div:first-child {
+    display: flex;
+    flex-direction: column-reverse; /* FLIPS THEM! Subtitle (Company) is now on top! */
+}
+
+.cv-entry-subtitle {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #2c3e50; /* Company is now the bold one */
+    font-style: normal;
+}
+
+.cv-entry-title {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #555; /* Job Title is now normal text */
+}
+
+.cv-entry-date {
+    font-size: 0.78rem;
+    color: #777;
+    text-align: right;
+}

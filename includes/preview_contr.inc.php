@@ -39,13 +39,13 @@ try {
     $user_id = (int) $_SESSION['user_id'];
 
     $raw = [
-        'personal'   => preview_get_personal($pdo, $user_id),
-        'summary'    => preview_get_summary($pdo, $user_id),
-        'education'  => preview_get_education($pdo, $user_id),
-        'experience' => preview_get_experience($pdo, $user_id),
-        'skills'     => preview_get_skills($pdo, $user_id),
-    ];
-
+    'personal'   => preview_get_personal($pdo, $user_id),
+    'summary'    => preview_get_summary($pdo, $user_id),
+    'education'  => preview_get_education($pdo, $user_id),
+    'experience' => preview_get_experience($pdo, $user_id),
+    'skills'     => preview_get_skills($pdo, $user_id),
+    'volunteer'  => preview_get_volunteer($pdo, $user_id),  // NEW
+];
     $cv_data = preview_process($raw);
 
 } catch (PDOException $e) {

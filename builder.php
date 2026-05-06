@@ -102,6 +102,8 @@ if (!isset($_SESSION["user_id"])) {
                 <span class="step" data-step="education">Education</span>
                 <span class="step" data-step="experience">Experience</span>
                 <span class="step" data-step="skills">Skills</span>
+                <span class="step" data-step="volunteer">Volunteer</span>
+                <span class="step" data-step="academic">Academic</span>
             </div>
 
             <!-- CARD -->
@@ -236,6 +238,56 @@ if (!isset($_SESSION["user_id"])) {
 
     </div>
 
+    <!-- VOLUNTEER EXPERIENCE -->
+<div class="form-section" id="volunteer">
+    <h2>Volunteer Experience <small style="color:#888;">(Optional)</small></h2>
+    <p>Add volunteer work, community service, or extracurricular activities.</p>
+
+    <div class="form-grid">
+        <div class="form-group">
+            <label>Organization</label>
+            <input type="text" name="vol_org" placeholder="e.g. LASU Red Cross Society">
+        </div>
+        <div class="form-group">
+            <label>Role / Title</label>
+            <input type="text" name="vol_role" placeholder="e.g. Volunteer Coordinator">
+        </div>
+        <div class="form-group">
+            <label>Start Date</label>
+            <input type="text" name="vol_start" placeholder="e.g. Jan 2023">
+        </div>
+        <div class="form-group">
+            <label>End Date</label>
+            <input type="text" name="vol_end" placeholder="e.g. Present">
+        </div>
+        <div class="form-group full">
+            <label>Description</label>
+            <textarea name="vol_description" placeholder="• Organized community outreach programs reaching 500+ students..."></textarea>
+        </div>
+    </div>
+</div>
+
+<!-- ACADEMIC DETAILS -->
+<div class="form-section" id="academic">
+    <h2>Academic Details <small style="color:#888;">(Optional)</small></h2>
+    <p>Add relevant coursework, honors, and societies for academic-focused CVs.</p>
+
+    <div class="form-grid">
+        <div class="form-group full">
+            <label>Relevant Courses</label>
+            <textarea name="relevant_courses" placeholder="Data Structures & Algorithms, Database Management Systems, Software Engineering, Web Technologies..."></textarea>
+        </div>
+        <div class="form-group full">
+            <label>Honors & Achievements</label>
+            <textarea name="honors_achievements" placeholder="• Dean's List (2023, 2024)&#10;• Best Project Award - Final Year&#10;• 2nd Place - LASU Hackathon 2024"></textarea>
+        </div>
+        <div class="form-group full">
+            <label>Societies & Extracurriculars</label>
+            <textarea name="societies" placeholder="• Member, LASU Computer Science Society (2022-Present)&#10;• Secretary, LASU Tech Club (2023-2024)"></textarea>
+        </div>
+    </div>
+</div>
+
        <!-- FOOTER -->
     <div class="builder-footer">
         <button type="button" class="back-btn">Back</button>
@@ -263,7 +315,7 @@ const backBtn = document.querySelector(".back-btn");
 let currentStep = 0;
 
 // ORDER
-const stepOrder = ["personal", "summary", "education", "experience", "skills"];
+const stepOrder = ["personal", "summary", "education", "experience", "skills", "volunteer", "academic"];
 
 // SHOW STEP FUNCTION
 function showStep(index) {

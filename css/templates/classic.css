@@ -1,3 +1,58 @@
+/* Move your current preview CV styling here */
+/* Keep fonts, colors, spacing for the classic look */
+
+/* ── CLASSIC: ELLIE STANTON STRUCTURE ── */
+
+.cv-header {
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #1a1d2e;
+    margin-bottom: 20px;
+}
+
+.cv-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #1a1d2e;
+    margin: 0 0 8px;
+}
+
+.cv-contact-row {
+    justify-content: center;
+    gap: 5px 15px;
+    font-size: 0.8rem;
+    color: #444;
+}
+
+/* Standard Entry Structure */
+.cv-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.cv-entry-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1a1d2e;
+}
+
+.cv-entry-subtitle {
+    font-size: 0.84rem;
+    color: #555;
+    font-style: italic;
+}
+
+.cv-entry-date {
+    font-size: 0.8rem;
+    color: #555;
+    text-align: right;
+}
+
+/* ... rest of your current styling ... */
+
 /* ============================================================
    preview.css — LASU CV Generator
    Loaded after dashboard.css. Adds the preview body,
@@ -313,32 +368,4 @@
     .cv-skills-list li::before {
         content: "•" !important;
     }
-}
-
-.template-btn {
-    padding: 6px 14px;
-    border: 2px solid #ddd;
-    border-radius: 6px;
-    background: #fff;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: #555;
-}
-
-.template-btn:hover {
-    border-color: #3d3f8f;
-    color: #3d3f8f;
-}
-
-.template-btn.active {
-    background: #3d3f8f;
-    border-color: #3d3f8f;
-    color: #fff;
-}
-
-@media print {
-    .template-btn { display: none !important; }
-    .preview-toolbar span { display: none !important; }
 }

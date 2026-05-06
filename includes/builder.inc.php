@@ -30,6 +30,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $skills = $_POST['skills'] ?? [];
 
+    // NEW FIELDS
+    $vol_org = $_POST['vol_org'] ?? '';
+    $vol_role = $_POST['vol_role'] ?? '';
+    $vol_start = $_POST['vol_start'] ?? '';
+    $vol_end = $_POST['vol_end'] ?? '';
+    $vol_description = $_POST['vol_description'] ?? '';
+    
+    $relevant_courses = $_POST['relevant_courses'] ?? '';
+    $honors_achievements = $_POST['honors_achievements'] ?? '';
+    $societies = $_POST['societies'] ?? '';
+
     // VALIDATION
     $errors = validate_builder_input($full_name, $email);
 
@@ -39,17 +50,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
-    // SAVE DATA
+    // Update the save_cv_data call
     save_cv_data(
-        $pdo,
-        $user_id,
-        $full_name, $email, $phone, $linkedin, $address,
-        $summary,
-        $institution, $degree, $field, $edu_start, $edu_end, $cgpa,
-        $company, $job_title, $exp_start, $exp_end, $description,
-        $skills
-    );
-
+    $pdo,
+    $user_id,
+    $full_name, $email, $phone, $linkedin, $address,
+    $summary,
+    $institution, $degree, $field, $edu_start, $edu_end, $cgpa,
+    $company, $job_title, $exp_start, $exp_end, $description,
+    $skills,
+    // NEW PARAMETERS
+    $vol_org, $vol_role, $vol_start, $vol_end, $vol_description,
+    $relevant_courses, $honors_achievements, $societies
+);
     header("Location: ../preview.php?success=1");
     exit();
 }

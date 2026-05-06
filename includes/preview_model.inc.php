@@ -11,7 +11,7 @@
 // Cols:  user_id, full_name, email, phone, linkedin_url, address
 function preview_get_personal(PDO $pdo, int $user_id): array|false {
     $stmt = $pdo->prepare("
-        SELECT full_name, email, phone, linkedin_url, address
+        SELECT full_name, email, phone, linkedin_url, address, template_choice
         FROM   personal
         WHERE  user_id = ?
         LIMIT  1
@@ -41,10 +41,11 @@ function preview_get_summary(PDO $pdo, int $user_id): array|false {
 function preview_get_education(PDO $pdo, int $user_id): array {
     $stmt = $pdo->prepare("
         SELECT institution, degree, field_of_study,
-               start_date, end_date, grade_cgpa
+               start_date, end_date, grade_cgpa,
+               relevant_courses, honors_achievements, societies
         FROM   education
         WHERE  user_id = ?
-        ORDER  BY end_date DESC
+        LIMIT  1
     ");
     $stmt->execute([$user_id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -73,6 +74,17 @@ function preview_get_skills(PDO $pdo, int $user_id): array {
         FROM   skills
         WHERE  user_id = ?
         ORDER  BY id ASC
+    ");
+    $stmt->execute([$user_id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Add new function for volunteer experience
+function preview_get_volunteer(PDO $pdo, int $user_id): array {
+    $stmt = $pdo->prepare("
+        SELECT organization, role_title, start_date, end_date, description
+        FROM   volunteer_experience
+        WHERE  user_id = ?
     ");
     $stmt->execute([$user_id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

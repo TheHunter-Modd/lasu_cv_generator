@@ -1,5 +1,4 @@
 <?php
-
 function save_cv_data(
     $pdo,
     $user_id,
@@ -7,20 +6,26 @@ function save_cv_data(
     $summary,
     $institution, $degree, $field, $edu_start, $edu_end, $cgpa,
     $company, $job_title, $exp_start, $exp_end, $description,
-    $skills
+    $skills,
+    // NEW PARAMETERS
+    $vol_org, $vol_role, $vol_start, $vol_end, $vol_description,
+    $relevant_courses, $honors_achievements, $societies
 ) {
 
-    // PERSONAL - Update if exists, insert if not
+    // PERSONAL (include template_choice)
+    $template = $_POST['template_choice'] ?? 'classic';
+    
     $stmt = $pdo->prepare("INSERT INTO personal 
-        (user_id, full_name, email, phone, linkedin_url, address)
-        VALUES (?, ?, ?, ?, ?, ?)
+        (user_id, full_name, email, phone, linkedin_url, address, template_choice)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE 
         full_name = VALUES(full_name),
         email = VALUES(email),
         phone = VALUES(phone),
         linkedin_url = VALUES(linkedin_url),
-        address = VALUES(address)");
-    $stmt->execute([$user_id, $full_name, $email, $phone, $linkedin, $address]);
+        address = VALUES(address),
+        template_choice = VALUES(template_choice)");
+    $stmt->execute([$user_id, $full_name, $email, $phone, $linkedin, $address, $template]);
 
     // SUMMARY
     $stmt = $pdo->prepare("INSERT INTO summaries 
@@ -30,18 +35,23 @@ function save_cv_data(
         professional_summary = VALUES(professional_summary)");
     $stmt->execute([$user_id, $summary]);
 
-    // EDUCATION
+    // EDUCATION (with new fields)
     $stmt = $pdo->prepare("INSERT INTO education 
-        (user_id, institution, degree, field_of_study, start_date, end_date, grade_cgpa)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        (user_id, institution, degree, field_of_study, start_date, end_date, grade_cgpa, 
+         relevant_courses, honors_achievements, societies)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE 
         institution = VALUES(institution),
         degree = VALUES(degree),
         field_of_study = VALUES(field_of_study),
         start_date = VALUES(start_date),
         end_date = VALUES(end_date),
-        grade_cgpa = VALUES(grade_cgpa)");
-    $stmt->execute([$user_id, $institution, $degree, $field, $edu_start, $edu_end, $cgpa]);
+        grade_cgpa = VALUES(grade_cgpa),
+        relevant_courses = VALUES(relevant_courses),
+        honors_achievements = VALUES(honors_achievements),
+        societies = VALUES(societies)");
+    $stmt->execute([$user_id, $institution, $degree, $field, $edu_start, $edu_end, $cgpa,
+                    $relevant_courses, $honors_achievements, $societies]);
 
     // EXPERIENCE
     $stmt = $pdo->prepare("INSERT INTO experience 
@@ -55,7 +65,7 @@ function save_cv_data(
         description = VALUES(description)");
     $stmt->execute([$user_id, $company, $job_title, $exp_start, $exp_end, $description]);
 
-    // SKILLS - Delete old, insert new
+    // SKILLS
     $stmt = $pdo->prepare("DELETE FROM skills WHERE user_id = ?");
     $stmt->execute([$user_id]);
     
@@ -64,5 +74,16 @@ function save_cv_data(
         foreach ($skills as $skill) {
             $stmt->execute([$user_id, $skill]);
         }
+    }
+
+    // VOLUNTEER EXPERIENCE (NEW)
+    $stmt = $pdo->prepare("DELETE FROM volunteer_experience WHERE user_id = ?");
+    $stmt->execute([$user_id]);
+    
+    if (!empty($vol_org)) {
+        $stmt = $pdo->prepare("INSERT INTO volunteer_experience 
+            (user_id, organization, role_title, start_date, end_date, description)
+            VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$user_id, $vol_org, $vol_role, $vol_start, $vol_end, $vol_description]);
     }
 }
