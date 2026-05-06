@@ -17,6 +17,7 @@ if (!isset($_SESSION["user_id"])) {
 <body>
 
 <div class="dashboard">
+    <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
     <!-- SIDEBAR -->
     <div class="sidebar">
@@ -59,6 +60,11 @@ if (!isset($_SESSION["user_id"])) {
         <div class="header-area">
 
             <div class="top-nav">
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
 
                 <div class="tabs">
                     <button>Personal</button>
@@ -289,6 +295,12 @@ if (!isset($_SESSION["user_id"])) {
         </div>
     </div>
 </div>
+<script>
+    function toggleMobileMenu() {
+    document.querySelector('.sidebar').classList.toggle('open');
+    document.querySelector('.sidebar-overlay').classList.toggle('open');
+}
+</script>
 
 </body>
 </html>

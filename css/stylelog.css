@@ -48,7 +48,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* Changed from height */
+    height: auto;      /* Force it to grow */
 }
 
 /* CARD */
@@ -145,4 +146,83 @@ body {
     font-size: 12px;
     margin-top: 20px;
     color: #555;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVENESS FOR LOGIN/SIGNUP (UPGRADED)
+============================================================ */
+@media (max-width: 768px) {
+    /* 1. Make the page background pure white so there are no gray gaps */
+    body {
+        background-color: #ffffff !important;
+    }
+
+    /* 2. Remove padding so the card touches the screen edges */
+    .container {
+        padding: 0 !important;
+        min-height: 100vh;
+        height: auto;
+    }
+
+    /* 3. Make the card stretch exactly to the bottom of the screen */
+    .card {
+        flex-direction: column;
+        width: 100%;
+        min-height: 100vh; 
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    /* 4. Adjust the purple header area */
+    .left {
+        width: 100%;
+        padding: 30px 25px 20px 25px;
+        text-align: center;
+    }
+
+    .left h1 {
+        font-size: 28px;
+        margin: 10px 0 5px 0;
+    }
+
+    /* 5. Hide the large illustration image completely to save space */
+    .image1 {
+        display: none !important;
+    }
+
+    /* 6. Let the form area take up the rest of the screen */
+    .right {
+        width: 100%;
+        padding: 20px 25px 40px 25px; /* Extra bottom padding */
+        flex-grow: 1; /* This pushes the footer to the bottom */
+    }
+
+    .right h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    /* 7. FIX: Make sure checkboxes and text wrap neatly on small screens */
+    .right label {
+        display: inline-block;
+        vertical-align: middle;
+        max-width: 85%;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    
+    /* Make the submit button full width on signup */
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Extra small phones (iPhone SE, etc.) */
+@media (max-width: 380px) {
+    .left {
+        padding: 20px 15px 15px 15px;
+    }
+    .right {
+        padding: 15px 15px 30px 15px;
+    }
 }

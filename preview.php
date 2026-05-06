@@ -30,6 +30,7 @@ require_once 'includes/preview_contr.inc.php';
 <body>
 
 <div class="dashboard">
+    <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
     <!-- ── SIDEBAR ─────────────────────────────────────────── -->
     <div class="sidebar">
@@ -71,6 +72,11 @@ require_once 'includes/preview_contr.inc.php';
         <!-- HEADER -->
         <div class="header-area">
             <div class="top-nav">
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <div class="tabs">
                     <button class="<?= $active_tab === 'personal' ? 'active' : '' ?>"
                             onclick="setTab('personal')">Personal</button>
@@ -378,6 +384,10 @@ function switchTemplate(templateName) {
     .catch(error => {
         console.error('Error saving template:', error);
     });
+}
+function toggleMobileMenu() {
+    document.querySelector('.sidebar').classList.toggle('open');
+    document.querySelector('.sidebar-overlay').classList.toggle('open');
 }
 </script>
 
