@@ -351,6 +351,34 @@ function setTab(tab) {
 }
 
 setTab('<?= $active_tab ?>');
+
+// ── TEMPLATE SWITCHER LOGIC ──
+function switchTemplate(templateName) {
+    // 1. Update active button styling
+    document.querySelectorAll('.template-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.template === templateName);
+    });
+    
+    // 2. Swap the CSS file instantly on the screen
+    const templateLink = document.querySelector('link[href*="css/templates/"]');
+    if (templateLink) {
+        templateLink.href = 'css/templates/' + templateName + '.css?v=' + Date.now();
+    }
+    
+    // 3. Save the choice to the database in the background
+    fetch('includes/save_template.inc.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'template=' + templateName + '&user_id=<?= $_SESSION["user_id"] ?>'
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log('Template saved to database:', data);
+    })
+    .catch(error => {
+        console.error('Error saving template:', error);
+    });
+}
 </script>
 
 </body>
