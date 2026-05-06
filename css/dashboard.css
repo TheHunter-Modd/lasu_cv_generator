@@ -80,6 +80,30 @@ body {
     padding: 0;
 }
 
+.menu a {
+    text-decoration: none;       /* Removes the underline */
+    color: inherit;              /* Forces text to use the <li> color */
+    display: flex;               /* Keeps icon and text aligned */
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+
+    color: #64748b;
+    transition: 0.2s;
+}
+
+
 .menu li {
     display: flex;
     align-items: center;

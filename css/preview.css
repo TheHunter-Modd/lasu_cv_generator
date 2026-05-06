@@ -341,4 +341,54 @@
 @media print {
     .template-btn { display: none !important; }
     .preview-toolbar span { display: none !important; }
+    @page {
+        margin: 0;
+        size: A4;
+    }
+
+    /* Force all sections visible when printing */
+    .cv-section,
+    .cv-header {
+        display: block !important;
+    }
+
+    /* ── THE FIX: Prevent awkward page breaks ── */
+    .cv-section {
+        /* Prevent a section from being split in half across pages */
+        break-inside: avoid;
+        page-break-inside: avoid;
+        
+        /* If a section IS pushed to a new page, ensure it has top space */
+        padding-top: 18px !important;
+        margin-top: 10px !important;
+    }
+
+    /* Prevent individual entries from splitting across pages */
+    .cv-entry {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* Ensure the skills list doesn't get cut off weirdly */
+    .cv-skills-list {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    
+    /* ── Force skills to display as separate items in print ── */
+    .cv-skills-list {
+        display: block !important;
+        margin: 10px 0 0 !important;
+    }
+
+    .cv-skills-list li {
+        display: list-item !important;
+        margin-bottom: 2px !important;
+        padding-left: 14px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .cv-skills-list li::before {
+        content: "•" !important;
+    }
 }
