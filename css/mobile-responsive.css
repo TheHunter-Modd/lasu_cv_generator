@@ -1,123 +1,65 @@
 /* ============================================================
    LASU CV GENERATOR — MOBILE RESPONSIVE FIX
-   File: css/mobile-responsive.css
-   How to use: Add ONE line to the <head> of every .php page,
-   AFTER your existing CSS links:
-     <link rel="stylesheet" href="css/mobile-responsive.css">
+   css/mobile-responsive.css
+
+   WHAT CHANGED FROM THE OLD VERSION:
+   - Removed the duplicate .mobile-menu-btn block (was overriding
+     dashboard.css and making the hamburger spans invisible)
+   - Removed the duplicate .sidebar-overlay block (conflict)
+   - Removed "button { max-width: 100% }" which was squashing
+     the hamburger button width
+   - Kept ONLY what dashboard.css does NOT already handle:
+     global resets, tablet tweaks, preview page, print rules
    ============================================================ */
 
 
 /* ─────────────────────────────────────────────────────────
-   SECTION 1 — GLOBAL RESETS & BASE FIXES
-   These apply on all screen sizes and fix the root causes
-   of horizontal overflow on mobile.
+   SECTION 1 — GLOBAL RESETS
    ──────────────────────────────────────────────────────── */
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box; /* Prevents padding from blowing out widths */
+  box-sizing: border-box;
 }
 
 html, body {
-  overflow-x: hidden;     /* Hard stop for any stray horizontal scroll */
+  overflow-x: hidden;
   width: 100%;
 }
 
 img {
-  max-width: 100%;        /* Images never escape their container */
+  max-width: 100%;
   height: auto;
 }
 
+/* NOTE: "button { max-width: 100% }" has been REMOVED.
+   It was collapsing the hamburger button's width to 0
+   because the button sits in a flex container with no
+   explicit width, making the spans disappear. */
+
 input,
 textarea,
-select,
-button {
-  max-width: 100%;        /* Form controls can't overflow either */
+select {
+  max-width: 100%;
 }
 
 
 /* ─────────────────────────────────────────────────────────
-   SECTION 2 — HAMBURGER BUTTON
-   Add this button to every .php page inside .top-nav,
-   BEFORE the .tabs div:
-     <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-       <span></span><span></span><span></span>
-     </button>
-   (preview.php already has this — dashboard.php and
-   builder.php still need it added.)
-   ──────────────────────────────────────────────────────── */
-
-.mobile-menu-btn {
-  display: none;           /* Hidden on desktop */
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  z-index: 1001;
-}
-
-.mobile-menu-btn span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: #333;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-/* Overlay that dims the page when sidebar is open on mobile */
-.sidebar-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 999;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.sidebar-overlay.open {
-  display: block;
-  opacity: 1;
-}
-
-
-/* ─────────────────────────────────────────────────────────
-   SECTION 3 — TABLET BREAKPOINT  (≤ 1024px)
-   The two-column sidebar + main layout starts to feel
-   cramped around this width. We tighten spacing here
-   without yet going fully single-column.
+   SECTION 2 — TABLET  (≤ 1024px)
    ──────────────────────────────────────────────────────── */
 
 @media (max-width: 1024px) {
 
-  /* Shrink the sidebar from its default ~220px */
   .sidebar {
     width: 200px;
     min-width: 200px;
   }
 
-  /* Allow tabs to wrap instead of overflowing */
-  .tabs {
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  /* Collapse the right-side search + icons in the header */
   .actions input[type="text"] {
     width: 140px;
   }
 
-  /* Dashboard grid: 2 columns instead of 3+ */
-  .content {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  /* Builder form: single column grid on tablet */
   .form-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -125,145 +67,19 @@ button {
 
 
 /* ─────────────────────────────────────────────────────────
-   SECTION 4 — MOBILE BREAKPOINT  (≤ 768px)
-   Full single-column layout. Sidebar becomes a drawer.
+   SECTION 3 — PREVIEW PAGE MOBILE  (≤ 768px)
+   dashboard.css already handles sidebar, hamburger, tabs,
+   and content layout. This section only adds what
+   dashboard.css doesn't cover: the preview/CV paper.
    ──────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
 
-  /* ── 4a. LAYOUT: Stack sidebar off-screen, main takes full width ── */
-
-  .dashboard {
-    flex-direction: column;  /* If using flexbox */
-    display: block;          /* Fallback */
-    width: 100%;
-  }
-
-  /* Sidebar becomes a fixed off-screen drawer */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: -260px;            /* Hidden off-screen */
-    width: 260px;
-    height: 100vh;
-    z-index: 1000;
-    overflow-y: auto;
-    transition: left 0.3s ease;
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-  }
-
-  /* When JS adds .open, it slides in */
-  .sidebar.open {
-    left: 0;
-  }
-
-  /* Main content takes full viewport width */
-  .main {
-    width: 100%;
-    margin-left: 0;          /* Remove any desktop left-margin/offset */
-    min-height: 100vh;
-  }
-
-  /* ── 4b. HAMBURGER: Show it on mobile ── */
-
-  .mobile-menu-btn {
-    display: flex;
-  }
-
-  /* ── 4c. TOP-NAV: Stack items vertically ── */
-
-  .top-nav {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 12px 16px;
-  }
-
-  /* Row that holds search + icons + profile */
-  .actions {
-    width: 100%;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .actions input[type="text"] {
-    width: 100%;
-    flex: 1 1 100%;
-  }
-
-  /* Tabs scroll horizontally — never wrap to two rows */
-  .tabs {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-    display: flex;
-    gap: 8px;
-    padding-bottom: 4px;
-    scrollbar-width: none;   /* Hide scrollbar (Firefox) */
-  }
-
-  .tabs::-webkit-scrollbar {
-    display: none;           /* Hide scrollbar (Chrome/Safari) */
-  }
-
-  .tabs button {
-    flex-shrink: 0;          /* Buttons don't squish */
-  }
-
-  /* ── 4d. DASHBOARD CONTENT: Single column ── */
-
-  .content {
-    grid-template-columns: 1fr;
-    padding: 12px 16px;
-    gap: 16px;
-  }
-
-  /* Section cards stack vertically */
-  .sections {
-    grid-column: 1 / -1;
-  }
-
-  /* Analytics cards become full-width */
-  .analytics {
-    grid-column: 1 / -1;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .analytics .card {
-    width: 100%;
-  }
-
-  /* Progress and action cards */
-  .progress,
-  .card.actions-card,
-  .card.tips-card {
-    grid-column: 1 / -1;
-  }
-
-  /* Section cards: show icon + text side-by-side, not overlapping */
-  .section-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-  }
-
-  .section-card .section-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 1;
-  }
-
-  /* ── 4e. BUILDER / CV INPUT FORM: Single column ── */
-
+  /* Builder steps: horizontal scroll */
   .builder-container {
     padding: 12px 16px;
   }
 
-  /* Step nav pills: horizontal scroll like tabs */
   .builder-steps {
     overflow-x: auto;
     white-space: nowrap;
@@ -272,6 +88,7 @@ button {
     padding-bottom: 4px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    justify-content: flex-start;
   }
 
   .builder-steps::-webkit-scrollbar {
@@ -282,19 +99,16 @@ button {
     flex-shrink: 0;
   }
 
-  /* Form grid: always 1 column on mobile */
+  /* Form grid: 1 column on mobile */
   .form-grid {
-    grid-template-columns: 1fr !important; /* Override the 2-col tablet rule */
+    grid-template-columns: 1fr !important;
     gap: 14px;
   }
 
-  /* .full class already makes things span full width on desktop;
-     on mobile everything is full width anyway */
   .form-group.full {
     grid-column: 1 / -1;
   }
 
-  /* Textarea should be tall enough to type comfortably */
   .builder-card textarea {
     min-height: 120px;
     width: 100%;
@@ -311,10 +125,7 @@ button {
     padding: 12px;
   }
 
-  /* Skill input row */
   .skill-input {
-    display: flex;
-    gap: 8px;
     flex-wrap: wrap;
   }
 
@@ -323,39 +134,16 @@ button {
     min-width: 0;
   }
 
-  /* ── 4f. PREVIEW PAGE: Scale the CV paper down to fit ── */
-
+  /* Preview page toolbar */
   .preview-body {
     padding: 12px 8px;
   }
 
-  /* Toolbar: stack template buttons + download button */
   .preview-toolbar {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
     padding: 12px 16px;
-  }
-
-  .preview-toolbar > div {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
-  }
-
-  /* Template switcher buttons: horizontal scroll row */
-  .preview-toolbar > div > div {
-    display: flex;
-    overflow-x: auto;
-    gap: 8px;
-    width: 100%;
-    padding-bottom: 2px;
-    scrollbar-width: none;
-  }
-
-  .preview-toolbar > div > div::-webkit-scrollbar {
-    display: none;
   }
 
   .template-btn {
@@ -367,74 +155,42 @@ button {
     justify-content: center;
   }
 
-  /*
-    THE CRITICAL CV PREVIEW FIX
-    ────────────────────────────
-    The CV paper is designed for A4 (210mm ≈ 794px) and won't
-    naturally shrink. We use CSS scale() to fit it into the
-    mobile viewport without horizontal scroll.
-
-    How it works:
-    - The .cv-wrapper is a fixed-height frame.
-    - The .cv-paper is scaled down via transform.
-    - transform-origin: top left ensures it scales from the
-      top-left corner so nothing gets clipped.
-  */
+  /* CV paper: scale to fit without horizontal scroll */
   .cv-wrapper {
     width: 100%;
-    overflow: hidden;        /* Clip anything that still escapes */
+    overflow: hidden;
     display: flex;
     justify-content: center;
   }
 
   .cv-paper {
-    /* Scale factor: (viewport - 32px padding) / 794px A4 width
-       Dynamically updated by JS below, but 0.42 is a safe fallback
-       for a 375px wide phone. */
     transform-origin: top center;
     transform: scale(var(--cv-scale, 0.42));
-    /* Keep the paper's natural height (don't collapse it) */
     margin-bottom: calc((var(--cv-scale, 0.42) - 1) * 1120px);
   }
-
 }
 
 
 /* ─────────────────────────────────────────────────────────
-   SECTION 5 — SMALL PHONE BREAKPOINT  (≤ 480px)
-   Extra tweaks for very small screens (iPhone SE, etc.)
+   SECTION 4 — SMALL PHONES  (≤ 480px)
    ──────────────────────────────────────────────────────── */
 
 @media (max-width: 480px) {
 
-  /* Tighten up card and section padding */
   .card,
   .section-card,
   .builder-card {
     padding: 14px 12px;
   }
 
-  /* Profile: hide the text label on very small screens */
-  .profile .info small {
-    display: none;
-  }
-
-  /* Slightly larger tap targets for nav icons */
-  .icons span {
-    padding: 6px;
-  }
-
-  /* The page header text */
   .page-header h1 {
     font-size: 1.4rem;
   }
 
-  /* Form labels */
   .form-group label {
     font-size: 0.82rem;
   }
 
-  /* CV scale even smaller for 320–375px phones */
   .cv-paper {
     margin-bottom: calc((var(--cv-scale, 0.36) - 1) * 1120px);
   }
@@ -442,14 +198,11 @@ button {
 
 
 /* ─────────────────────────────────────────────────────────
-   SECTION 6 — PRINT RULES
-   Make sure printing the CV still works correctly
-   even after the mobile scale transform is applied.
+   SECTION 5 — PRINT
    ──────────────────────────────────────────────────────── */
 
 @media print {
 
-  /* Hide all app chrome */
   .sidebar,
   .sidebar-overlay,
   .mobile-menu-btn,
@@ -466,7 +219,6 @@ button {
     margin: 0 !important;
   }
 
-  /* Reset the scale transform so the paper prints full-size */
   .cv-paper {
     transform: none !important;
     margin-bottom: 0 !important;

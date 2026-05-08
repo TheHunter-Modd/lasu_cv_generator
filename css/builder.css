@@ -19,6 +19,13 @@
     background: #fff;
     border-radius: 14px;
     margin-bottom: 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.builder-steps::-webkit-scrollbar {
+    display: none;
 }
 
 .builder-steps span {
@@ -26,6 +33,8 @@
     cursor: pointer;
     position: relative;
     padding-bottom: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .builder-steps .active {
@@ -41,7 +50,6 @@
     padding: 25px;
     border-radius: 16px;
 }
-
 
 .form-section {
     display: none;
@@ -75,6 +83,8 @@ textarea {
     border-radius: 10px;
     border: 1px solid #ddd;
     margin-top: 5px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* TEXTAREA */
@@ -83,8 +93,7 @@ textarea {
     min-height: 120px;
 }
 
-
-/* INPUT */
+/* SKILL INPUT ROW */
 .skill-input {
     display: flex;
     gap: 10px;
@@ -105,6 +114,8 @@ textarea {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 /* SKILL BOX */
@@ -149,6 +160,7 @@ textarea {
     display: flex;
     justify-content: space-between;
     margin-top: 25px;
+    gap: 10px;
 }
 
 .back-btn {
@@ -169,4 +181,93 @@ textarea {
     padding: 12px 18px;
     border-radius: 10px;
     cursor: pointer;
+}
+
+/* ════════════════════════════════════════
+   BUILDER MOBILE  ≤ 768px
+   ════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+    .builder-container {
+        padding: 12px 14px;
+    }
+
+    /* Step nav: horizontal scroll, left-aligned */
+    .builder-steps {
+        justify-content: flex-start;
+        gap: 20px;
+        padding: 12px 14px;
+    }
+
+    /* Form: single column */
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: 1 / -1;
+    }
+
+    /* Builder card: less padding */
+    .builder-card {
+        padding: 16px 14px;
+    }
+
+    /* Footer buttons: stack vertically */
+    .builder-footer {
+        flex-direction: column-reverse;
+    }
+
+    .builder-footer button {
+        width: 100%;
+        padding: 13px;
+        text-align: center;
+    }
+
+    /* Skill input: wrap on small screens */
+    .skill-input {
+        flex-wrap: wrap;
+    }
+
+    .skill-input input {
+        flex: 1 1 100%;
+    }
+
+    .skill-input button {
+        flex: 1 1 100%;
+    }
+
+    /* Skill box: less padding */
+    .skill-box {
+        padding: 20px;
+    }
+}
+
+/* ════════════════════════════════════════
+   BUILDER SMALL PHONES  ≤ 480px
+   ════════════════════════════════════════ */
+@media (max-width: 480px) {
+
+    .builder-container {
+        padding: 10px 12px;
+    }
+
+    .builder-steps {
+        gap: 16px;
+        padding: 10px 12px;
+        font-size: 0.82rem;
+    }
+
+    .builder-card {
+        padding: 14px 12px;
+    }
+
+    .form-group label {
+        font-size: 0.82rem;
+    }
+
+    .form-group input,
+    textarea {
+        font-size: 0.9rem;
+    }
 }
