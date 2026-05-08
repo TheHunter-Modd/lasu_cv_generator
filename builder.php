@@ -15,6 +15,7 @@ if (!isset($_SESSION["user_id"])) {
 <title>Builder - LASU CV</title>
 <link rel="stylesheet" href="css/dashboard.css">
 <link rel="stylesheet" href="css/builder.css"> <!-- NEW -->
+<link rel="stylesheet" href="css/mobile-responsive.css">
 </head>
 <body>
 
@@ -63,11 +64,13 @@ if (!isset($_SESSION["user_id"])) {
         <!-- HEADER (reuse yours) -->
         <div class="header-area">
             <div class="top-nav">
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()"
+          aria-label="Open navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
                 <div class="tabs">
                     <button>Personal</button>
                     <button>Academic</button>
@@ -408,6 +411,7 @@ function toggleMobileMenu() {
     document.querySelector('.sidebar-overlay').classList.toggle('open');
 }
 </script>
+<script src="js/mobile.js"></script>
 
 </body>
 </html>

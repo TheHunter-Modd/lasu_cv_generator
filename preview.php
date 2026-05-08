@@ -26,6 +26,7 @@ require_once 'includes/preview_contr.inc.php';
 ?>
 <link rel="stylesheet" href="css/preview.css?v=4"> <!-- Main print/layout rules -->
 <link rel="stylesheet" href="css/templates/<?= $chosen_template ?>.css?v=1"> <!-- Dynamic Template! -->
+<link rel="stylesheet" href="css/mobile-responsive.css">
 </head>
 <body>
 
@@ -325,6 +326,7 @@ require_once 'includes/preview_contr.inc.php';
     </div><!-- /main -->
 </div><!-- /dashboard -->
 
+<script src="js/mobile.js"></script>
 <script>
 const TAB_MAP = {
     personal : ['section-personal', 'section-summary', 'section-skills'],
