@@ -1,37 +1,48 @@
- * {
+/* ============================================================
+   stylelog.css — LASU CV Generator Login Page
+   Fully responsive: desktop → tablet → phone
+   ============================================================ */
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
 
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 body {
     background: #f2f3f7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* HEADER */
+/* ── HEADER ────────────────────────────────────────────────── */
 .header {
     background: linear-gradient(to right, #6f77c6, #8b90e0);
-    padding: 18px 40px;
+    padding: 16px 40px;
+    flex-shrink: 0;
 }
 
-/* THIS IS THE KEY */
 .logo {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-/* IMAGE */
 .logo img {
     width: 32px;
     height: 32px;
 }
 
-/* TEXT BLOCK */
 .text h3 {
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     margin: 0;
 }
@@ -39,190 +50,385 @@ body {
 .text small {
     display: block;
     color: #e0e3ff;
-    font-size: 12px;
+    font-size: 11px;
     margin-top: 2px;
 }
 
-/* CONTAINER */
+/* ── CONTAINER ─────────────────────────────────────────────── */
 .container {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Changed from height */
-    height: auto;      /* Force it to grow */
+    padding: 24px 16px;
 }
 
-/* CARD */
 .card {
     display: flex;
-    width: 900px;
+    width: 100%;
+    max-width: 920px;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-/* LEFT SIDE */
+/* ── LEFT SIDE ─────────────────────────────────────────────── */
 .left {
-    width: 50%;
+    width: 45%;
     background: linear-gradient(to bottom, #7c83d3, #6f77c6);
     color: white;
-    padding: 40px;
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.left-content {
+    flex: 1;
+}
+
+.left h4 {
+    font-size: 14px;
+    opacity: 0.8;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 .left h1 {
-    font-size: 40px;
-    margin: 20px 0;
+    margin-top: 12px;
+    font-size: 36px;
+    line-height: 1.15;
 }
 
 .left p {
+    margin-top: 16px;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.65;
+    opacity: 0.9;
 }
 
-/* IMAGE */
+.image1 {
+    margin-top: 24px;
+    text-align: center;
+}
+
 .image1 img {
     width: 100%;
-    margin-top: 20px;
     border-radius: 10px;
+    display: block;
 }
 
-/* RIGHT SIDE */
+/* ── RIGHT SIDE ────────────────────────────────────────────── */
 .right {
-    width: 50%;
+    width: 55%;
     background: #fff;
-    padding: 40px;
+    padding: 40px 36px;
+    display: flex;
+    align-items: center;
+}
+
+.right-content {
+    width: 100%;
 }
 
 .right h2 {
-    font-size: 28px;
+    font-size: 26px;
+    margin-bottom: 6px;
+    color: #1e293b;
 }
 
 .sub {
-    color: #777;
-    margin-bottom: 20px;
+    color: #64748b;
+    margin-bottom: 18px;
+    font-size: 14px;
 }
 
-/* LINK */
 .login-link {
-    margin-bottom: 20px;
-    font-size: 14px;
+    margin-bottom: 22px;
+    font-size: 13px;
+    color: #64748b;
 }
 
 .login-link a {
     color: #7c83d3;
     text-decoration: none;
+    font-weight: 600;
 }
 
-/* INPUTS */
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* ── INPUTS ────────────────────────────────────────────────── */
 .right input {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    border: 1.5px solid #d1d5db;
     border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #fff;
+    color: #1e293b;
 }
 
-/* BUTTON */
+.right input:focus {
+    border-color: #7c83d3;
+    box-shadow: 0 0 0 3px rgba(124,131,211,0.12);
+}
+
+.right input::placeholder {
+    color: #9ca3af;
+}
+
+/* ── BUTTON ────────────────────────────────────────────────── */
 .btn {
-    width: 160px;
-    padding: 12px;
+    width: 100%;
+    padding: 13px;
     border: none;
-    border-radius: 20px;
     background: linear-gradient(to right, #7c83d3, #6f77c6);
     color: white;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
     cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: 4px;
 }
 
-/* ERROR */
+.btn:hover {
+    opacity: 0.92;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* ── ERROR ──────────────────────────────────────────────────── */
 .error-box p {
-    color: red;
+    color: #dc2626;
     font-size: 13px;
     margin-top: 10px;
 }
 
-/* FOOTER */
+/* ── FOOTER ────────────────────────────────────────────────── */
 .footer {
     text-align: center;
     font-size: 12px;
-    margin-top: 20px;
-    color: #555;
+    color: #94a3b8;
+    padding: 16px 20px;
+    flex-shrink: 0;
+    line-height: 1.6;
 }
 
-/* ============================================================
-   MOBILE RESPONSIVENESS FOR LOGIN/SIGNUP (UPGRADED)
-============================================================ */
-@media (max-width: 768px) {
-    /* 1. Make the page background pure white so there are no gray gaps */
-    body {
-        background-color: #ffffff !important;
-    }
 
-    /* 2. Remove padding so the card touches the screen edges */
-    .container {
-        padding: 0 !important;
-        min-height: 100vh;
-        height: auto;
-    }
+/* ══════════════════════════════════════════════════════════════
+   TABLET  (≤ 1024px)
+   ══════════════════════════════════════════════════════════════ */
 
-    /* 3. Make the card stretch exactly to the bottom of the screen */
+@media (max-width: 1024px) {
     .card {
-        flex-direction: column;
-        width: 100%;
-        min-height: 100vh; 
-        border-radius: 0;
-        box-shadow: none;
+        max-width: 700px;
     }
 
-    /* 4. Adjust the purple header area */
     .left {
-        width: 100%;
-        padding: 30px 25px 20px 25px;
-        text-align: center;
+        padding: 32px 28px;
     }
 
     .left h1 {
-        font-size: 28px;
-        margin: 10px 0 5px 0;
+        font-size: 30px;
     }
 
-    /* 5. Hide the large illustration image completely to save space */
-    .image1 {
-        display: none !important;
-    }
-
-    /* 6. Let the form area take up the rest of the screen */
     .right {
-        width: 100%;
-        padding: 20px 25px 40px 25px; /* Extra bottom padding */
-        flex-grow: 1; /* This pushes the footer to the bottom */
-    }
-
-    .right h2 {
-        font-size: 24px;
-        margin-bottom: 15px;
-    }
-
-    /* 7. FIX: Make sure checkboxes and text wrap neatly on small screens */
-    .right label {
-        display: inline-block;
-        vertical-align: middle;
-        max-width: 85%;
-        font-size: 13px;
-        line-height: 1.4;
-    }
-    
-    /* Make the submit button full width on signup */
-    .btn {
-        width: 100%;
+        padding: 32px 28px;
     }
 }
 
-/* Extra small phones (iPhone SE, etc.) */
-@media (max-width: 380px) {
-    .left {
-        padding: 20px 15px 15px 15px;
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE  (≤ 768px)
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+    /* White background so there are no gray gaps */
+    body {
+        background-color: #ffffff;
     }
+
+    /* Header: tighter padding */
+    .header {
+        padding: 14px 20px;
+    }
+
+    .text h3 {
+        font-size: 16px;
+    }
+
+    .text small {
+        font-size: 10px;
+    }
+
+    .logo img {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Container: no extra padding */
+    .container {
+        padding: 0;
+        align-items: stretch;
+    }
+
+    /* Card: vertical stack, full width */
+    .card {
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        min-height: 0;
+    }
+
+    /* Left panel: compact brand strip */
+    .left {
+        width: 100%;
+        padding: 28px 24px 20px;
+        text-align: center;
+        justify-content: flex-start;
+    }
+
+    .left h4 {
+        font-size: 12px;
+    }
+
+    .left h1 {
+        font-size: 26px;
+        margin-top: 8px;
+    }
+
+    .left p {
+        font-size: 13px;
+        margin-top: 10px;
+    }
+
+    /* Hide illustration on mobile to save space */
+    .image1 {
+        display: none;
+    }
+
+    /* Right panel: form area */
     .right {
-        padding: 15px 15px 30px 15px;
+        width: 100%;
+        padding: 24px 24px 32px;
+    }
+
+    .right h2 {
+        font-size: 22px;
+    }
+
+    .sub {
+        font-size: 13px;
+    }
+
+    /* Prevent iOS zoom (must be ≥ 16px font) */
+    .right input {
+        font-size: 16px;
+        padding: 13px 14px;
+    }
+
+    /* Button: full width */
+    .btn {
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 14px 20px;
+    }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   SMALL PHONES  (≤ 480px)
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+
+    .header {
+        padding: 12px 16px;
+    }
+
+    .text h3 {
+        font-size: 15px;
+    }
+
+    .text small {
+        display: none;
+    }
+
+    .left {
+        padding: 22px 18px 16px;
+    }
+
+    .left h1 {
+        font-size: 22px;
+    }
+
+    .left p {
+        font-size: 12px;
+    }
+
+    .right {
+        padding: 20px 18px 28px;
+    }
+
+    .right h2 {
+        font-size: 20px;
+    }
+
+    .sub {
+        font-size: 12px;
+    }
+
+    .right input {
+        padding: 12px 12px;
+        font-size: 16px;
+    }
+
+    .footer {
+        font-size: 11px;
+        padding: 12px 16px;
+    }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   EXTRA SMALL  (≤ 360px — iPhone SE, Galaxy S10e)
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 360px) {
+
+    .left {
+        padding: 18px 14px 14px;
+    }
+
+    .left h1 {
+        font-size: 20px;
+    }
+
+    .right {
+        padding: 16px 14px 24px;
+    }
+
+    .right h2 {
+        font-size: 18px;
+    }
+
+    .login-link {
+        font-size: 12px;
     }
 }

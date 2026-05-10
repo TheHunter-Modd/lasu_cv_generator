@@ -1,11 +1,15 @@
 <?php
 require_once 'includes/config_session.inc.php';
 require_once 'includes/builder_view.inc.php';
+require_once 'includes/dbh.inc.php';
+require_once 'includes/settings_model.inc.php';
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
     die();
 }
+
+ $_dashboard_user = get_user_by_id($pdo, $_SESSION["user_id"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +69,7 @@ if (!isset($_SESSION["user_id"])) {
         <div class="header-area">
             <div class="top-nav">
 
-                <!-- HAMBURGER: visible on mobile only via CSS -->
+                <!-- HAMBURGER -->
                 <button class="mobile-menu-btn" id="hamburgerBtn"
                         onclick="toggleSidebar()"
                         aria-label="Open navigation menu"
@@ -87,15 +91,62 @@ if (!isset($_SESSION["user_id"])) {
                 <div class="actions">
                     <input type="text" placeholder="Search...">
                     <div class="icons">
-                        <span><img src="assets/calendar.svg"></span>
+                        <!--<span><img src="assets/calendar.svg"></span>
                         <span><img src="assets/bell-dot.svg"></span>
-                        <span><img src="assets/settings.svg"></span>
+                        <a href="settings.php" style="text-decoration:none;display:flex;align-items:center;"><img src="assets/settings.svg" style="width:20px;height:20px;" alt="Settings"></a>-->
                     </div>
-                    <div class="profile">
-                        <div class="avatar">V</div>
-                        <div class="info">
-                            <strong><?php echo $_SESSION["user_matric"]; ?></strong>
-                            <small>LASU Student</small>
+                    <div class="profile-wrap" id="profileWrap">
+                        <div class="profile" onclick="toggleProfile()" style="cursor:pointer;">
+                            <?php if (!empty($_dashboard_user["avatar"])): ?>
+                                <img src="<?php echo htmlspecialchars($_dashboard_user["avatar"]); ?>" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" alt="Avatar">
+                            <?php else: ?>
+                                <div class="avatar"><?php echo strtoupper(substr($_SESSION["user_matric"], 0, 1)); ?></div>
+                            <?php endif; ?>
+                            <div class="info">
+                                <strong><?php echo $_SESSION["user_matric"]; ?></strong>
+                                <small>LASU Student</small>
+                            </div>
+                            <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div class="pd-header">
+                                <?php if (!empty($_dashboard_user["avatar"])): ?>
+                                    <img src="<?php echo htmlspecialchars($_dashboard_user["avatar"]); ?>" style="width:42px;height:42px;border-radius:50%;object-fit:cover;box-shadow:0 2px 8px rgba(99,102,241,0.25);" alt="Avatar">
+                                <?php else: ?>
+                                    <div class="pd-avatar"><?php echo strtoupper(substr($_SESSION["user_matric"], 0, 1)); ?></div>
+                                <?php endif; ?>
+                                <div class="pd-info">
+                                    <strong><?php echo htmlspecialchars($_SESSION["user_matric"]); ?></strong>
+                                    <small>LASU Student</small>
+                                </div>
+                            </div>
+                            <div class="pd-links">
+                                <a href="dashboard.php" class="pd-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                                    <span>Dashboard</span>
+                                    <kbd>D</kbd>
+                                </a>
+                                <a href="builder.php" class="pd-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    <span>Edit CV</span>
+                                    <kbd>E</kbd>
+                                </a>
+                                <a href="preview.php" class="pd-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    <span>Preview CV</span>
+                                    <kbd>P</kbd>
+                                </a>
+                                <a href="settings.php" class="pd-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                                    <span>Settings</span>
+                                    <kbd>S</kbd>
+                                </a>
+                            </div>
+                            <div class="pd-divider"></div>
+                            <a href="includes/logout.inc.php" class="pd-item danger">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                                <span>Log Out</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -382,6 +433,35 @@ document.addEventListener('DOMContentLoaded', function () {
             if (sidebar && sidebar.classList.contains('open')) toggleSidebar();
         }
     });
+});
+
+/* ── Profile dropdown ── */
+function toggleProfile() {
+    var wrap = document.getElementById('profileWrap');
+    var dd   = document.getElementById('profileDropdown');
+    if (!wrap || !dd) return;
+
+    var isOpen = dd.classList.toggle('open');
+    wrap.classList.toggle('open', isOpen);
+}
+
+function closeProfile() {
+    var wrap = document.getElementById('profileWrap');
+    var dd   = document.getElementById('profileDropdown');
+    if (!wrap || !dd) return;
+    dd.classList.remove('open');
+    wrap.classList.remove('open');
+}
+
+document.addEventListener('click', function (e) {
+    var wrap = document.getElementById('profileWrap');
+    if (wrap && !wrap.contains(e.target)) {
+        closeProfile();
+    }
+});
+
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeProfile();
 });
 </script>
 

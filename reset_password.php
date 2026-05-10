@@ -1,6 +1,12 @@
 <?php
 require_once 'includes/config_session.inc.php';
 require_once 'includes/login_view.inc.php';
+
+// If no reset session exists, redirect back to forgot password
+if (!isset($_SESSION["reset_matric"])) {
+    header("Location: forgot_password.php");
+    die();
+}
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +14,7 @@ require_once 'includes/login_view.inc.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - LASU CV Generator</title>
+    <title>Reset Password - LASU CV Generator</title>
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
@@ -50,25 +56,21 @@ require_once 'includes/login_view.inc.php';
             <!-- RIGHT SIDE -->
             <div class="right">
                 <div class="right-content">
-                    <h2>Welcome back.</h2>
-                    <p class="sub">Please enter your details to sign in.</p>
+                    <h2>Reset Password</h2>
+                    <p class="sub">Enter your new password below.</p>
 
-                    <div class="login-link">
-                        Don't have an account? <a href="index.php">Sign up</a>
-                    </div>
+                    <form action="includes/reset_password.inc.php" method="post">
 
-                    <form action="includes/login.inc.php" method="post">
+                        <input type="password" name="pwd" placeholder="New Password" required>
 
-                        <input type="text" name="matric_number" placeholder="Matric Number" required>
+                        <input type="password" name="confirm_pwd" placeholder="Confirm New Password" required>
 
-                        <input type="password" name="pwd" placeholder="Password" required>
-
-                        <button class="btn" type="submit">Log In</button>
+                        <button class="btn" type="submit">Reset Password</button>
 
                     </form>
 
                     <div class="error-box">
-                        <?php Check_login_errors(); ?>
+                        <?php check_reset_errors(); ?>
                     </div>
                 </div>
             </div>

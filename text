@@ -143,3 +143,17 @@ nextBtn.addEventListener("click", (e) => {
     }
 
 });
+
+
+Test and Things to FIx
+
+1. The resume vitals: This is hard coded, make it dynamic.
+2. CGPA allows letters, make it only allow numbers and a dot.
+3. Professional is not previewing same way
+4. Print preview is not the same as what is showing normally.
+5. Nav bar is hard coded, make it functional.
+6. Add delete and edit functionality for each section.
+7. Make the top nav (calender, notification, settings, avatar) functional.
+8.  Print preview is not the same on mobile as what is showing on pc.
+9. Lasu logo must be included. 
+10. SETTINGS SECTION DONE ON LOCAL BUT PP CHANGE ONLY SHOWS ON DASHBOOARD AND NOT ON BUILDER NOR PREVIEW. FIX THIS.
